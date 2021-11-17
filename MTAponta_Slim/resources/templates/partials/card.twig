@@ -1,0 +1,2732 @@
+<!-- Modal dados do lote -->
+<div class="modal" style="bottom: auto; right: auto;width:500px;left: 127px; top: 98px;" id="modalInfo" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" id="modal-content-info">
+			<div class="modal-header" style="padding: 0;">
+				<strong style="margin-left: 10px;">Histórico de Visitas</strong>
+				<button type="button" class="close" style="position: relative; float:right" onclick="desmarcaLote();fechaModal('#lightbox_2');fechaModal('#modalZoom');modalPesquisaAberta('#pesquisa_avancada')" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="padding: initial;">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link show active" id="home-tab" data-toggle="tab" href="#info" role="tab" aria-controls="home" aria-selected="true">Informações do Lote</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Ocorrências</a>
+					</li>
+					<button type="button" id="btnStatusFiltroHistorico" onclick="filtroHistoricoVisita()" class="btn btn-light" style='box-shadow: none;color: red;' value='0'>						
+						<i class="fas fa-undo-alt"></i>
+						&ensp;Alternar filtro
+					</button>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div
+						class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="home-tab"><!-- Dados do lote -->
+					</div>
+					<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+						<ul
+							class="list-group" id="ocorrencia_lote_ul"><!-- Dados das ocorrencias -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal fotos das ocorrencias -->
+<div class="modal" id="lightbox" style="left: 129px; top: 398px">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header fotos" id="header_fotos">
+				<strong style="margin-left: 10px;">Fotos</strong>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			</div>
+			<div class="container"></div>
+			<div class="modal-body" style="background: #2b323a;">
+				<div id="carouselExampleControls" class="carousel slide carousel-thumbnails" data-ride="carousel" data-interval="0">
+					<div
+						class="carousel-inner" id='carousel'><!-- Fotos -->
+					</div>
+					<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+					<!--/.Controls-->
+					<ol class="carousel-indicators figurinhas" id="miniFotos"></ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal carrega shape -->
+<div class="modal" id="shape" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="padding: 0px">
+				<strong style="margin-left: 10px;">Carregar Shape</strong>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="form_shape" enctype="multipart/form-data">
+					<!-- upload of a single file -->
+
+					<!-- multiple input fields for the same input name, use brackets -->
+						<p>
+							<label>
+						Escolha um arquivo para carregar:
+						</label>
+						<br/>
+					<input type="file" name="file[]"/> </p>
+
+					<p style="height: 14px">
+						<input type="submit" class="btn btn-primary"/>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal tipo ocorrencias -->
+<div class="modal" style="bottom: auto; right: auto;width:500px;" id="tipo_ocorrencia" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="padding: 0px">
+				<strong style="margin-left: 10px;">Tipos de Ocorrência</strong>
+				<button type="button" class="close" data-dismiss="modal" onclick="fechaModal('#tipo_ocorrencia')" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="aponta-form">
+					<div class="aponta-form-row">
+						<div style="flex: 2;">
+							<div class="form-group">
+								<label for="id" style="margin-bottom: auto;">ID:</label>
+								<input type="text" value="" class="form-control mt-form-control-sm" id="id" name="id" disabled="disabled">
+							</div>
+						</div>
+						<div style="flex: 8;">
+							<div class="form-group">
+								<label for="id" style="margin-bottom: auto;">Descrição:</label>
+								<input type="text" value="" class="form-control mt-form-control-sm" id="nome" name="nome" required="required">
+							</div>
+						</div>
+						<div style="flex: 2">
+							<div class="form-group">
+								<label for="id" style="margin-bottom: auto;">Cor:</label>
+								<input type="color" value="#ffffff" class="form-control mt-form-control-sm" id="color" name="color" required="required" style="padding: 0px;">
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row">
+						<button class="btn btn-primary btn-sm" onclick="saveTipoOcorrencia()">Salvar</button>
+						<button class="btn btn-info btn-sm ml-2" onclick="clearTipoOcorrenciaInputs()">Limpar</button>
+					</div>
+				</div>
+				<div class="mt-2" hidden style="opacity: inherit;">
+					<ul class="list-group" id="tipo_ocorrencias_ul"></ul>
+				</div>
+				<div class="mt-2">
+					<input type="text" class="form-control mt-form-control-sm myFindInput" placeholder="pesquisar.." title="Pesquisa de tipos de ocorrência">
+					<table class="table table-sm" id="tbl-tipoOcorrencias">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Descrição</th>
+								<th>Cor</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody id="tbl-tipoOcorrenciasTBody"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Pesquisa Avançada -->
+<div class="modal" style="overflow:hiddden !important;width:450px;" id="pesquisa_avancada" role="dialog">
+	<div class="modal-dialog" id="pesquisa_avancada_dialog" role="document">
+		<div class="modal-content" style="background: #ffffff" id="pesquisa_avancada_content">
+			<div class="modal-header" style="padding: 0px;display: block;">
+				<strong style="margin-left: 10px;">Pesquisa/Tratamento - Resumo da Semana</strong>
+				<span
+					style="float:right;margin: auto;display: flex;">
+					<!--<span style="display: flex;font-size: 0.75rem; margin:auto;">
+						<i class="fa fa-minus" style="margin: 5px;"></i>
+						<input type="range" class="form-control-range" min="50" max="100" step="1" value="100" onchange="zoom('pesquisa_avancada',this.value)">
+						<i class="fa fa-plus" style="margin: 5px;"></i>
+					</span>-->
+					<button type="button" onclick="" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</span>
+			</div>
+			<div class="modal-body">
+				<div class="aponta-form" id="pesquisa-avancada-form">
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<div class="form-group">
+								<label for="municipio" style="margin-bottom: auto;">Município:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_municipio" name="municipio" disabled></select>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="uf" style="margin-bottom: auto;">UF:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_uf" name="uf" disabled></select>
+							</div>
+						</div>
+						<div class="col-4 p-0">
+							<div class="form-group">
+								<label for="agente" style="margin-bottom: auto;">Agente:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_agente" name="agente"></select>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-4 p-0">
+							<div class="form-group">
+								<label for="dataIni" style="margin-bottom: auto;">Data início:
+								</label>
+								<input type="date" class="form-control mt-form-control-sm" id="form_pesquisa_avancada_dataIni" name="dataIni"/>
+							</div>
+						</div>
+						<div class="col-4 p-0">
+							<div class="form-group">
+								<label for="dataFim" style="margin-bottom: auto;">Data fim:
+								</label>
+								<input type="date" class="form-control mt-form-control-sm" id="form_pesquisa_avancada_dataFim" name="dataFim"/>
+							</div>
+						</div>
+						<div class="col-4 p-0">
+							<div class="form-group">
+								<label for="localidade" style="margin-bottom: auto;">Localidade:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_localidade" name="localidade" disabled></select>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-7 p-0">
+							<div class="form-group">
+								<label for="categoria" style="margin-bottom: auto;">Categoria:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_categoria" name="categoria" disabled></select>
+							</div>
+						</div>
+						<div class="col-5 p-0">
+							<div class="form-group">
+								<label for="zona" style="margin-bottom: auto;">Zona:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_zona" name="zona" disabled></select>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<div class="form-group">
+								<label for="tipo" style="margin-bottom: auto;">Tipo:</label>
+								<label for="sede" style="margin-bottom: auto;">Sede</label>
+								<input type="radio" value="1" id="form_pesquisa_avancada_tipo" onclick="#" name="tipo" disabled>
+								<label for="outros" style="margin-bottom: auto;">Outros</label>
+								<input type="radio" value="2" id="form_pesquisa_avancada_tipo" onclick="#" name="tipo" disabled>
+							</div>
+						</div>
+						<div class="col-6 p-0">
+							<div class="form-group">
+								<label for="concluida" style="margin-bottom: auto;">Concluida:</label>
+								<label for="concluida_sim" style="margin-bottom: auto;">Sim</label>
+								<input type="radio" value="sim" onclick="#" name="concluida" disabled>
+								<label for="concluida_sim" style="margin-bottom: auto;">Não</label>
+								<input type="radio" value="nao" onclick="#" name="concluida" disabled>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-7 p-0">
+							<div class="form-group">
+								<label for="semana" style="margin-bottom: auto;">Semana Epidemia:</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_semana" name="semana" disabled></select>
+							</div>
+						</div>
+						<div class="col-5 p-0">
+							<div class="form-group">
+								<label for="ciclo_ano" style="margin-bottom: auto;">Ciclo/Ano:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_ciclo_ano" name="ciclo_ano" disabled></select>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-7 p-0">
+							<div class="form-group">
+								<label for="microarea" style="margin-bottom: auto;">Microárea:</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_semana" name="semana" disabled></select>
+							</div>
+						</div>
+						<div class="col-5 p-0">
+							<div class="form-group">
+								<label for="atividade" style="margin-bottom: auto;">Atividade:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_atividade" name="atividade" disabled></select>
+							</div>
+						</div>
+					</div>
+
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<button title="Realizar busca" class="btn btn-sm btn-primary" onclick="ocorrenciaSearch()">Buscar</button>
+							<button title="Limpar busca" class="btn btn-sm btn-warning" onclick="limpar_pesquisa()">Limpar</button>
+						</div>
+						<div class="col-6 p-0 text-right" id="footer_pesquisa"></div>
+					</div>
+				</div>
+				<div class="mt-2" id="tab_pesquisa_avancada" hidden>
+					<ul
+						class="list-group" id="pesquisa_avancada_ul"><!-- Dados das ocorrencias -->
+					</ul>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding: 0rem; border-top: 0px; display: flow-root;"></div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Relatório -->
+<div class="modal" style="bottom: auto; right: auto;width:500px; left: 127px; top: 344px" id="modal_relatorio" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-header" style="padding: 0px">
+			<strong style="margin-left: 10px;">Pesquisa Avançada</strong>
+			<button type="button" onclick="" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body row" style="padding: 0px; margin-left: 0px; margin-right: auto;"></div>
+	</div>
+</div>
+
+<!-- Modal fotos das ocorrencias 2-->
+<div class="modal" id="lightbox_2" style="left: 637px; top: 98px; width: 500px;" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header fotos_2" id="header_fotos">
+				<strong style="margin-left: 216px;">Fotos</strong>
+				<button type="button" class="close" onclick="fechaModal('#modalZoom')" data-dismiss="modal" aria-hidden="true">×</button>
+			</div>
+			<div class="modal-body" style="width: 500px;">
+				<div class="row" id="body_fotos"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Zoom -->
+<div class="modal" id="modalZoom" style="left: 637px; top: 98px" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header" id="header_zoom" style="padding: initial;"></div>
+			<div class="modal-body">
+				<div class="content-zoom">
+					<div class="row" id="row_zoom"></div>
+				</div>
+			</div>
+			<!--<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>-->
+		</div>
+	</div>
+</div>
+
+<!-- Modal modalImgZoom -->
+<div class="modal" id="modalImgZoom" data-backdrop="false" style="width: 100%; height: 100%;" role="dialog">
+	<div class="modal-dialog modal-lg modal-dialog-centered modal-full" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="padding: initial;">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="content-zoom"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="blabla" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-header" style="padding: 0px"></div>
+		<div class="modal-body row">
+			Carregando Mapa!
+		</div>
+	</div>
+</div>
+
+<!-- Modal cadastro não encontrado -->
+<div class="modal fade" style="left: 84px; top: 61px; width: auto;" id="modalerro" role="dialog" aria-labelledby="erroLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="background: #d6d6d5">
+			<div class="modal-header" style="border-bottom: none;">
+				<h5 class="modal-title" id="erroLabel">Nenhum Cadastro Encontrado!</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" style="left: 84px; top: 61px; width: auto;" id="modalerroInsc" role="dialog" aria-labelledby="erroLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="background: #d6d6d5">
+			<div class="modal-header" style="border-bottom: none;">
+				<h5 class="modal-title" id="erroLabel">Lote não encontrado para esta Inscrição!</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal cores pintadas no mapa-->
+<div class="modal" id="modal_legenda_tipo_ocorrencia" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" id="legenda_tipo_ocorrencia_content">
+			<div class="modal-header" style="padding: 0px">
+				<strong style="margin-left: 10px;">Mostrar ocorrências</strong>
+				<button type="button" class="close" onclick="desmarcaColor()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="legenda_tipo_ocorrencia_body">
+				<ul id="ulLegendaNomeCores" style="list-style: none;padding: 0;margin-bottom: 0;font-size: 0.85rem;"></ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal info agentes-->
+<div class="modal" style="bottom: auto; right: auto;width:500px;left: 127px; top: 98px;" id="modal_info_agente" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" id="modal-content-info">
+			<div class="modal-header" style="padding: 0;">
+				<strong style="margin-left: 10px;">Informações do Agente</strong>
+				<button type="button" class="close" style="position: relative; float:right" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="padding: initial;">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link show active" id="home-tab-agente" data-toggle="tab" href="#info_agente" role="tab" aria-controls="home" aria-selected="true">Informações do Agente</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="profile-tab-agente" data-toggle="tab" href="#profile_agente" role="tab" aria-controls="profile" aria-selected="false">Ocorrências</a>
+					</li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div
+						class="tab-pane fade show active" id="info_agente" role="tabpanel" aria-labelledby="home-tab-agente"><!-- Dados do Agente -->
+					</div>
+					<div class="tab-pane fade" id="profile_agente" role="tabpanel" aria-labelledby="profile-tab-agente">
+						<ul
+							class="list-group" id="ocorrencias_agente_ul"><!-- Ocorrencias do Agente -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal grafico-->
+<div class="modal" id="modal_grafico" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="background: #ffffff">
+			<div class="modal-header" style="padding: 0px">
+				<strong style="margin-left: 10px;">Grafico da pesquisa</strong>
+				<button type="button" class="close" onclick="closeGrafico()" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="body_grafico">
+				<div class="row" style="background:#ddd">
+					<div class="col-12 mt-2 mb-2">
+						<label>Gráfico por:</label>
+						<select class="form-control mt-form-control-sm" id="grafSelect" onchange="grafSelectOnChange(event)">
+							<option value="agente">Agente</option>
+							<option value="data">Data</option>
+							<option value="tipo">Tipo</option>
+							<option value="zona">Zona</option>
+						</select>
+					</div>
+				</div>
+				<canvas id="myChart" width="400" height="400"></canvas>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Backup base-->
+<div class="modal" style="bottom: auto; right: auto;width:500px;left: 127px; top: 98px;" id="modal_backup" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" id="modal-content-info">
+			<div class="modal-header" style="padding: 0;">
+				<strong style="margin-left: auto;">Backup</strong>
+				<button type="button" class="close" style="position: relative; float:right" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="padding: initial;">
+				<div class="tab-content" id="TabContent_Backup">
+					<ul
+						class="list-group" id="backup_ul"><!-- Lista de Backup -->
+					</ul>
+				</div>
+			</div>
+			<div class="modal-footer" style="display: contents;">
+				<button type="button" title="Criar Backup" onclick="creatBackup()" class="btn btn-sm btn-primary">Criar Backup</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal pesquisa temática-->
+<div class="modal" id="modal_tematica" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="background: #ffffff">
+			<div class="modal-header" style="padding: 0px">
+				<strong style="margin-left: 10px;">Pesquisas:</strong>
+				<button type="button" class="close" onclick="" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modal_body_tematica">
+				<div>
+					<button type="button" style="border: 0;padding: 0;" class="list-group-item list-group-item-action">Por tipo de ocorrêmcia/Bairro</button>
+					<button type="button" style="border: 0;padding: 0;" class="list-group-item list-group-item-action">Por agente/Bairro</button>
+					<button type="button" style="border: 0;padding: 0;" class="list-group-item list-group-item-action">Por tratamento dado/Bairro</button>
+					<button type="button" style="border: 0;padding: 0;" class="list-group-item list-group-item-action">Maior concentração/Bairro</button>
+					<button type="button" style="border: 0;padding: 0;" class="list-group-item list-group-item-action">Notificações Entregues</button>
+					<button type="button" style="border: 0;padding: 0;" class="list-group-item list-group-item-action">Notificações Não Atendidas</button>
+					<button type="button" style="border: 0;padding: 0;" class="list-group-item list-group-item-action">Mapa de calor sobre pesquisas</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Layers -->
+<div class="modal" style="bottom: auto; right: auto;width:500px;" id="modal_layers" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="padding: 0px">
+				<strong style="margin-left: 10px;">Layers</strong>
+				<button type="button" class="close" data-dismiss="modal" onclick="fechaModal('#modal_layers')" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form method="post" id="form_layers" action="/layers">
+					<div class="row">
+						<div class="div_pesquisa" style="flex-grow: 1; width: 10%;">
+							<label for="id" style="margin-bottom: auto;">Id:</label>
+							<input type="text" value="" class="form-control mt-form-control-sm" id="id_layer" name="id" disabled="disabled">
+						</div>
+						<div class="div_pesquisa" style="width: 50%;">
+							<label for="nome" style="margin-bottom: auto;">Nome:</label>
+							<input type="text" value="" class="form-control mt-form-control-sm" id="nome_layer" name="nome">
+						</div>
+						<div class="div_pesquisa" style="flex-grow: 9;">
+							<label for="tabela" style="margin-bottom: auto;">Tabela:</label>
+							<input type="text" value="" class="form-control mt-form-control-sm" id="tabela" name="tabela" required="required">
+						</div>
+						<div class="div_pesquisa" style="flex-grow: 1">
+							<label for="descricao" style="margin-bottom: auto;">Descrição:</label>
+							<input type="text" value="" class="form-control mt-form-control-sm" id="descricao" name="descricao" required="required">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="float-right">
+							<input type="submit" class="btn btn-sm btn-primary" id="gravar_layer" value="Gravar"/>
+							<button class="btn btn-info btn-sm ml-2" onclick="clearLayerInputs()">Limpar</button>
+						</div>
+					</div>
+				</form>
+				<div class="row mt-2" style="opacity: inherit;">
+					<ul
+						class="list-group" id="layers_ul"><!-- Dados das ocorrencias -->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Cadastro de usuarios -->
+<div class="modal" style="bottom: auto; right: auto;width:40%;left: 127px; top: 98px;height: auto;" id="modal_users" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="background: #ffffff">
+			<div class="modal-header" style="padding: 0px">
+				<strong style="margin-left: 10px;">Usuários</strong>
+				<button type="button" class="close" onclick="" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="aponta-form">
+					<div class="aponta-form-row p-0">
+						<div class="col-3 p-0">
+							<input type="hidden" name="id">
+							<div class="form-group">
+								<label for="login" style="margin-bottom: auto;">Login:</label>
+								<input type="text" name="login" class="form-control mt-form-control-sm">
+							</div>
+						</div>
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="password" style="margin-bottom: auto;">Senha:</label>
+								<input type="password" name="password" class="form-control mt-form-control-sm">
+							</div>
+						</div>
+						<div class="col-4 p-0">
+							<div class="form-group">
+								<label for="type" style="margin-bottom: auto;">Tipo de acesso:</label>
+								<select name="type" id="userRoleSelect" class="form-control mt-form-control-sm">
+									<option value="1">Admin</option>
+									<option value="2">Admin com acesso ao aplicativo</option>
+									<option value="3">Acesso a Web e Aplicativo</option>
+									<option value="4">Acesso somente a Web</option>
+									<option value="5">Acesso somente ao Aplicativo</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="name" style="margin-bottom: auto;">Nome:</label>
+								<input type="text" name="name" class="form-control mt-form-control-sm">
+							</div>
+						</div>
+						<div class="col-6 p-0">
+							<div class="form-group">
+								<label for="email" style="margin-bottom: auto;">E-mail:</label>
+								<input type="email" name="email" placeholder="your@email.com" class="form-control mt-form-control-sm">
+							</div>
+						</div>
+						<div class="col-3 p-0">
+							<div class="form-group" style="flex: 1;">
+								<label for="color" style="margin-bottom: auto;">Cor:</label>
+								<input type="color" name="color" class="form-control mt-form-control-sm">
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<button class="btn btn-primary btn-sm" onclick="saveUser()">Salvar</button>
+							<button class="btn btn-info btn-sm ml-2" onclick="clearUserInputs()">Limpar</button>
+						</div>
+					</div>
+				</div>
+				<div class="mt-2">
+					<input type="text" class="form-control mt-form-control-sm myFindInput" placeholder="pesquisar.." title="Pesquisa de usuários">
+					<table class="table table-sm" id="tbl-users">
+						<thead>
+							<tr>
+								<th hidden>Id</th>
+								<th>Nome</th>
+								<th>Login</th>
+								<th>E-mail</th>
+								<th>Tipo de acesso</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="modal_search" style="width:30%;opacity: 0.95; height: fit-content;" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="padding: 0px">
+				<strong style="margin-left: 10px;">Pesquisa</strong>
+				<button type="button" class="close" data-dismiss="modal" onclick="fechaModal('#modal_search')" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body"></div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Pesquisa e Tratamento - Resumo da Semana Tela 1 -->
+<div class="modal" style="overflow:hiddden !important;width:400px;" id="pesquisa_avancada_resumo" role="dialog">
+	<div class="modal-dialog" id="pesquisa_avancada_dialog_resumo" role="document">
+		<div class="modal-content" style="background: #ffffff" id="pesquisa_avancada_content_resumo">
+			<div class="modal-header" style="padding: 0px;display: block;">
+				<strong style="margin-left: 10px;">Pesquisa/Tratamento - Resumo da Semana</strong>
+				<span style="float:right;margin: auto;display: flex;">
+					<button type="button" onclick="" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</span>
+			</div>
+			<div class="modal-body">
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo">
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="quarteirao" style="margin-bottom: auto;">N. de quarteirães concluídos</label>
+								<input type="text" name="quarteirao" style="width: 100px;margin-left: 10px;"id="concluida" disabled/>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="quarteirao" style="margin-bottom: auto;">N. de Imóveis trabalhados por tipo</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo_tipo">
+					<div class="aponta-form-row p-0">
+						<div class="col-4 p-0">
+							<label for="r" style="margin-bottom: auto;">R</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="r" id="tipo_imovel_r" disabled/>
+						</div>
+						<div class="col-4 p-0">
+							<label for="c" style="margin-bottom: auto;">C</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="c" id="tipo_imovel_c" disabled/>
+						</div>
+						<div class="col-4 p-0">
+							<label for="tb" style="margin-bottom: auto;">TB</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="tb" id="tipo_imovel_tb" disabled/>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-4 p-0">
+							<label for="pe" style="margin-bottom: auto;">PE</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="pe" id="tipo_imovel_pe" disabled/>
+						</div>
+						<div class="col-4 p-0">
+							<label for="o" style="margin-bottom: auto;">O</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="o" id="tipo_imovel_o" disabled/>
+						</div>
+						<div class="col-4 p-0">
+							<label for="total" style="margin-bottom: auto;">Total</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="total" id="total_tipo" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo">
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="quarteirao" style="margin-bottom: auto;">N. de Imóveis</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo_imoveis">
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<label for="focal" style="margin-bottom: auto;">Focal</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="focal" id="focal" disabled/>
+						</div>
+						<div class="col-6 p-0">
+							<label for="perifocal" style="margin-bottom: auto;">Perifocal</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="perifocal" id="perifocal" disabled/>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<label for="inspecionados" style="margin-bottom: auto;">Inspecionados</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="inspecionados" id="imovel_inspecionado" disabled/>
+						</div>
+						<div class="col-6 p-0">
+							<label for="recuperados" style="margin-bottom: auto;">Recuperados</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="recuperados" value="verificar" style="color: red;" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo">
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="quarteirao" style="margin-bottom: auto;">Pendência</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo_pendencia">
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<label for="recusados" style="margin-bottom: auto;">Recusados</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="recusados" id="pendencia_rec" disabled/>
+						</div>
+						<div class="col-6 p-0">
+							<label for="fechados" style="margin-bottom: auto;">Fechados</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="fechados" id="pendencia_fec" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo">
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="quarteirao" style="margin-bottom: auto;">N. de Depósitos Inspecionados por Tipo</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo_depositos">
+					<div class="aponta-form-row p-0">
+						<div class="col-3 p-0">
+							<label for="a1" style="margin-bottom: auto;">A1</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="a1" id="dep_insp_a1" disabled/>
+						</div>
+						<div class="col-3 p-0">
+							<label for="a2" style="margin-bottom: auto;">A2</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="a2" id="dep_insp_a2" disabled/>
+						</div>
+						<div class="col-3 p-0">
+							<label for="b" style="margin-bottom: auto;">B</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="b" id="dep_insp_b" disabled/>
+						</div>
+						<div class="col-3 p-0">
+							<label for="c" style="margin-bottom: auto;">C</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="c" id="dep_insp_c" disabled/>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-3 p-0">
+							<label for="d1" style="margin-bottom: auto;">D1</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="d1" id="dep_insp_d1" disabled/>
+						</div>
+						<div class="col-3 p-0">
+							<label for="d2" style="margin-bottom: auto;">D2</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="d2" id="dep_insp_d2" disabled/>
+						</div>
+						<div class="col-3 p-0">
+							<label for="e" style="margin-bottom: auto;">E</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="e" id="dep_insp_e" disabled/>
+						</div>
+						<div class="col-3 p-0">
+							<label for="total" style="margin-bottom: auto;">Total</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="total" id="total_di_tipo" disabled/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding: 0rem; border-top: 0px; display: flow-root;"></div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Pesquisa e Tratamento - Resumo da Semana Tela 2 -->
+<div class="modal" style="overflow:hiddden !important;width:400px;" id="pesquisa_avancada_resumo_2" role="dialog">
+	<div class="modal-dialog" id="pesquisa_avancada_dialog_resumo_2" role="document">
+		<div class="modal-content" style="background: #ffffff" id="pesquisa_avancada_content_resumo_2">
+			<div class="modal-header" style="padding: 0px;display: block;">
+				<strong style="margin-left: 10px;">Pesquisa/Tratamento - Resumo da Semana</strong>
+				<span style="float:right;margin: auto;display: flex;">
+					<button type="button" onclick="" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</span>
+			</div>
+			<div class="modal-body">
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo_2">
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="am_coletadas" style="margin-bottom: auto;">N. tubitos/amostras coletadas</label>
+								<input type="text" style="width: 100px;margin-left: 17px;" name="am_coletadas" id="qtde_tributos" disabled/>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="dp_eliminados" style="margin-bottom: auto;">N. de depósitos eliminados</label>
+								<input type="text" style="width: 100px;margin-left: 36px;" name="dp_eliminados" id="dep_eliminados" disabled/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" style="margin-top: -14px;" id="pesquisa-avancada-form_resumo_2">
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="dp_tratados" style="margin-bottom: auto;">Depósitos tratados</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo_tipo_2">
+					<div class="aponta-form-row p-0" style="border-bottom: inherit; margin-top: -8px;">
+						<div class="col-12 p-0">
+							<label for="larvecida" style="margin-bottom: auto;">Larvecida</label><br>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0" style="margin-top: 5px;">
+						<div class="col-12 p-0">
+							<label for="tipo" style="margin-bottom: auto;">Tipo</label>
+							<input class="form-control mt-form-control-sm" style="width: 100px;display: inline; margin-left: 185px;" type="text" name="tipo" id="tipo_focal_larv" disabled/>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0" style="margin-top: 5px;">
+						<div class="col-12 p-0">
+							<label for="quantidade" style="margin-bottom: auto;">Quantidade (gramas)</label>
+							<input class="form-control mt-form-control-sm" style="width: 100px;display: inline; margin-left: 81px;" type="text" name="quantidade" id="qtde_focal_larv" disabled/>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0" style="margin-top: 5px; margin-bottom: 5px;">
+						<div class="col-12 p-0">
+							<label for="quant_tratados" style="margin-bottom: auto; margin-bottom: 10px;">Quantidade dep tratados</label>
+							<input class="form-control mt-form-control-sm" style="width: 100px;display: inline; margin-left: 58px;" type="text" name="quant_tratados" id="qtde_dep_trat_focal_larv" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo_tipo_2">
+					<div class="aponta-form-row p-0" style="border-bottom: inherit; margin-top: -8px;">
+						<div class="col-12 p-0">
+							<label for="larvecida" style="margin-bottom: auto;">Adultecida</label><br>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0" style="margin-top: 5px;">
+						<div class="col-12 p-0">
+							<label for="tipo_ad" style="margin-bottom: auto;">Tipo</label>
+							<input class="form-control mt-form-control-sm" style="width: 100px;display: inline; margin-left: 185px;" type="text" name="tipo_ad" id="tipo_perifocal_adult" disabled/>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0" style="margin-top: 5px;">
+						<div class="col-12 p-0">
+							<label for="quantidade_ad" style="margin-bottom: auto;">Quantidade cargas</label>
+							<input class="form-control mt-form-control-sm" style="width: 100px;display: inline; margin-left: 95px;" type="text" name="quantidade_ad" id="qtde_cargas_perifocal_adult" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo">
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0">
+							<div class="form-group">
+								<label for="quarteirao" style="margin-bottom: auto;">N. Imóveis</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo_pendencia">
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<label for="tratados" style="margin-bottom: auto;">Tratados</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="recusados" id="imoveis_tratados" disabled/>
+						</div>
+						<div class="col-6 p-0">
+							<label for="resgatados" style="margin-bottom: auto;">Resgatados</label><br>
+							<input class="form-control mt-form-control-sm" type="text" name="fechados" id="resgate" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo">
+					<div class="aponta-form-row p-0" style="margin-top: 19px;">
+						<div class="col-12 p-0">
+							<div class="form-group ass">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+							<label for="ass_agente" style="margin-bottom: auto;">Assinatura do Agente</label>
+						</div>
+					</div>
+				</div>
+				<div class="aponta-form" id="pesquisa-avancada-form_resumo">
+					<div class="aponta-form-row p-0" style="margin-top: 1px;">
+						<div class="col-12 p-0">
+							<div class="form-group ass">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+							<label for="ass_supervisor" style="margin-bottom: auto;">Assinatura do Supervisor</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding: 0rem; border-top: 0px; display: flow-root;"></div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Pesquisa resumo do laboratorio -->
+<div class="modal" style="overflow:hiddden !important;width:800px;" id="pesquisa_avancada_laboratorio" role="dialog">
+	<div class="modal-dialog" id="pesquisa_avancada_laboratorio_dialog" role="document">
+		<div class="modal-content" style="background: #ffffff" id="pesquisa_avancada_laboratorio_content">
+			<div class="modal-header" style="padding: 0px;display: block;">
+				<strong style="margin-left: 10px;">Resumo do Laboratório</strong>
+				<span
+					style="float:right;margin: auto;display: flex;">
+					<!--<span style="display: flex;font-size: 0.75rem; margin:auto;">
+						<i class="fa fa-minus" style="margin: 5px;"></i>
+						<input type="range" class="form-control-range" min="50" max="100" step="1" value="100" onchange="zoom('pesquisa_avancada',this.value)">
+						<i class="fa fa-plus" style="margin: 5px;"></i>
+					</span>-->
+					<button type="button" onclick="fechaModal('#resumo_lab_2')" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</span>
+			</div>
+			<div class="modal-body">
+				<div class="aponta-form" id="pesquisa-avancada_laboratorio-form">
+					<div class="aponta-form-row p-0">
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="municipio" style="margin-bottom: auto;">Município:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_laboratorio_municipio" name="municipio"></select>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="uf" style="margin-bottom: auto;">UF:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_laboratorio_uf" name="uf"></select>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="agente" style="margin-bottom: auto;">Agente:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_laboratorio_agente" name="agente"></select>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="dataIni" style="margin-bottom: auto;">Data início:
+								</label>
+								<input type="date" class="form-control mt-form-control-sm" id="form_pesquisa_avancada_laboratorio_dataIni" name="dataIni" disabled/>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="dataFim" style="margin-bottom: auto;">Data fim:
+								</label>
+								<input type="date" class="form-control mt-form-control-sm" id="form_pesquisa_avancada_laboratorio_dataFim" name="dataFim" disabled/>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="localidade" style="margin-bottom: auto;">Localidade:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_laboratorio_localidade" name="localidade"></select>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="categoria" style="margin-bottom: auto;">Categoria:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_categoria" name="categoria" disabled></select>
+							</div>
+						</div>
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="zona" style="margin-bottom: auto;">Zona:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_zona" name="zona" disabled></select>
+							</div>
+						</div>
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="atividade" style="margin-bottom: auto;">Atividade:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_atividade" name="atividade" disabled></select>
+							</div>
+						</div>
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="microarea" style="margin-bottom: auto;">Microárea:</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_semana" name="semana" disabled></select>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-5 p-0">
+							<div class="form-group">
+								<label for="ciclo_ano" style="margin-bottom: auto;">Ciclo/Ano:
+								</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_ciclo_ano" name="ciclo_ano" disabled></select>
+							</div>
+						</div>
+						<div class="col-7 p-0">
+							<div class="form-group">
+								<label for="semana" style="margin-bottom: auto;">Semana Epidemia:</label>
+								<select class="form-control mt-form-control-sm" id="form_pesquisa_avancada_semana" name="semana" disabled></select>
+							</div>
+						</div>						
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<button title="Realizar busca" class="btn btn-sm btn-primary" onclick="resumoLab()">Buscar</button>
+							<button title="Limpar busca" class="btn btn-sm btn-warning" onclick="limpar_pesquisa_resumoLab()">Limpar</button>
+						</div>
+						<div class="col-6 p-0 text-right" id="footer_pesquisa">							
+							<i class="fas fa-2x fa-file-medical" title="Abrir tela resumo laboratório 2" style="margin: 0 18px;" onclick="abrirModal('#resumo_lab_2')"></i>
+							<i class="far fa-2x fa-arrow-alt-circle-left" onclick="nextPage(1)"></i>
+							<i class="far fa-2x fa-arrow-alt-circle-right" onclick="nextPage()"></i>
+						</div>
+					</div>
+				</div>
+				<div class="mt-2" id="tab_pesquisa_avancada">
+					<div class="row" id="row_1" style="display: contents;">
+						<div class="col-12 p-0">
+							<label for="larvecida" style="margin-bottom: auto;">Número de depósitos com espécimes por tipo</label><br>
+						</div>
+						<div class="aponta-form" id="resumo_laboratorio">							
+							<div class="aponta-form-row p-0" style="margin-top: -8px;">
+								<div class="col-3 p-0">
+									<label for="larvecida" style="margin-bottom: auto;">Espécimes</label><br>
+								</div>
+								<div class="col-1 p-0">
+									<label for="A1" style="margin-bottom: auto;">A1</label><br>
+								</div>
+								<div class="col-1 p-0">
+									<label for="A2" style="margin-bottom: auto;">A2</label><br>
+								</div>
+								<div class="col-1 p-0">
+									<label for="B" style="margin-bottom: auto;">B</label><br>
+								</div>
+								<div class="col-1 p-0">
+									<label for="C" style="margin-bottom: auto;">C</label><br>
+								</div>
+								<div class="col-1 p-0">
+									<label for="D1" style="margin-bottom: auto;">D1</label><br>
+								</div>
+								<div class="col-1 p-0">
+									<label for="D2" style="margin-bottom: auto;">D2</label><br>
+								</div>
+								<div class="col-1 p-0">
+									<label for="E" style="margin-bottom: auto;">E</label><br>
+								</div>
+								<div class="col-2 p-0">
+									<label for="Total" style="margin-bottom: auto;">Total</label><br>
+								</div>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 5px;">
+								<div class="col-3 p-0">
+									<label for="tipo" style="margin-bottom: auto;">Com Aedes aegypti</label>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_01" id="tela01_01" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_02" id="tela01_02" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_03" id="tela01_03" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_04" id="tela01_04" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_05" id="tela01_05" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_06" id="tela01_06" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_07" id="tela01_07" disabled/>
+								</div>
+								<div class="col-2 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_08" id="tela01_08" disabled/>
+								</div>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 5px;">
+								<div class="col-3 p-0">
+									<label for="tipo" style="margin-bottom: auto;">Com Aedes albopictus</label>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_09" id="tela01_09" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_10" id="tela01_10" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_11" id="tela01_11" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_12" id="tela01_12" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_13" id="tela01_13" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_14" id="tela01_14" disabled/>
+								</div>
+								<div class="col-1 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_15" id="tela01_15" disabled/>
+								</div>
+								<div class="col-2 p-0">
+									<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_16" id="tela01_16" disabled/>
+								</div>
+							</div>
+						</div>
+
+						<div class="row" style="margin-top: 10px;margin-left: 0px;margin-right: 0px;">
+							<div class="col-8 p-0">
+								<label for="larvecida" style="margin-bottom: auto;">Número de imóveis com espécimes por tipo:</label><br>
+							</div>
+							<div class="col-4 p-0">
+								<label for="larvecida" style="margin-bottom: auto;">Número de exemplares:</label><br>
+							</div>
+						</div>
+						<div class="aponta-form-row p-0" id="resumo_laboratorio_2" style="margin-top: -8px;">
+							<div class="row" style="margin-top: 10px;margin-left: 0px;margin-right: 0px;">
+								<div class="col-8 p-0">
+									<div class="aponta-form" id="resumo_laboratorio">							
+										<div class="aponta-form-row p-0" style="margin-top: -8px;">
+											<div class="col-5 p-0">
+												<label for="larvecida" style="margin-bottom: auto;">Espécimes</label><br>
+											</div>
+											<div class="col-1 p-0">
+												<label for="A1" style="margin-bottom: auto;">R</label><br>
+											</div>
+											<div class="col-1 p-0">
+												<label for="A2" style="margin-bottom: auto;">C</label><br>
+											</div>
+											<div class="col-1 p-0">
+												<label for="B" style="margin-bottom: auto;">TB</label><br>
+											</div>
+											<div class="col-1 p-0">
+												<label for="C" style="margin-bottom: auto;">PE</label><br>
+											</div>
+											<div class="col-1 p-0">
+												<label for="D1" style="margin-bottom: auto;">O</label><br>
+											</div>
+											<div class="col-2 p-0">
+												<label for="D2" style="margin-bottom: auto;">Total</label><br>
+											</div>
+										</div>
+										<div class="aponta-form-row p-0" style="margin-top: 5px;">
+											<div class="col-5 p-0">
+												<label for="tipo" style="margin-bottom: auto;">Com Aedes aegypti</label>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_17" id="tela01_17" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_18" id="tela01_18" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_19" id="tela01_19" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_20" id="tela01_20" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_21" id="tela01_21" disabled/>
+											</div>
+											<div class="col-2 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_22" id="tela01_22" disabled/>
+											</div>								
+										</div>
+										<div class="aponta-form-row p-0" style="margin-top: 5px;">
+											<div class="col-5 p-0">
+												<label for="tipo" style="margin-bottom: auto;">Com Aedes albopictus</label>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_23" id="tela01_23" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_24" id="tela01_24" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_25" id="tela01_25" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_26" id="tela01_26" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_27" id="tela01_27" disabled/>
+											</div>
+											<div class="col-2 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_28" id="tela01_28" disabled/>
+											</div>								
+										</div>
+										<div class="aponta-form-row p-0" style="margin-top: 5px;">
+											<div class="col-5 p-0">
+												<label for="tipo" style="margin-bottom: auto;">Outros</label>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_29" id="tela01_29" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_30" id="tela01_30" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_31" id="tela01_31" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_32" id="tela01_32" disabled/>
+											</div>
+											<div class="col-1 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_33" id="tela01_33" disabled/>
+											</div>
+											<div class="col-2 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_34" id="tela01_34" disabled/>
+											</div>								
+										</div>
+									</div>
+								</div>
+								<div class="col-4 p-0">
+									<div class="aponta-form" id="resumo_laboratorio">							
+										<div class="aponta-form-row p-0" style="margin-top: -8px;">
+											<div class="col-3 p-0">
+												<label for="larvecida" style="margin-bottom: auto;">Larvas</label><br>
+											</div>
+											<div class="col-3 p-0">
+												<label for="A1" style="margin-bottom: auto;">Pupas</label><br>
+											</div>
+											<div class="col-3 p-0">
+												<label for="A2" style="margin-bottom: auto;">Ex. pupa</label><br>
+											</div>
+											<div class="col-3 p-0">
+												<label for="B" style="margin-bottom: auto;">Adultos</label><br>
+											</div>
+										</div>
+										<div class="aponta-form-row p-0" style="margin-top: 5px;">
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_35" id="tela01_35" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_36" id="tela01_36" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_37" id="tela01_37" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_38" id="tela01_38" disabled/>
+											</div>																	
+										</div>
+										<div class="aponta-form-row p-0" style="margin-top: 5px;">
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_39" id="tela01_39" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_40" id="tela01_40" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_41" id="tela01_41" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_42" id="tela01_42" disabled/>
+											</div>																	
+										</div>
+										<div class="aponta-form-row p-0" style="margin-top: 5px;">
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_43" id="tela01_43" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_44" id="tela01_44" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_45" id="tela01_45" disabled/>
+											</div>
+											<div class="col-3 p-0">
+												<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela01_46" id="tela01_46" disabled/>
+											</div>																	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" id="row_2" style="display: none">
+						<div class="aponta-form" id="resumo_laboratorio">
+							<div class="col-12 p-0">
+								<label for="larvecida" style="margin-bottom: auto;">N. e sequência de quarteirão</label><br>
+							</div>
+							<div class="aponta-form-row p-0" id="resumo_laboratorio_3" style="margin-top: 5px;">
+								<div class="col-4" style="border: 1px solid !important;">
+									<div class="aponta-form-row p-0">
+										<div class="col-12 p-0">
+											<label for="larvecida" style="margin-bottom: auto; font-size: 11px;">Com Aedes aegypti</label><br>
+										</div>										
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_01" id="tela02_01" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_02" id="tela02_02" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_03" id="tela02_03" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_04" id="tela02_04" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_05" id="tela02_05" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_06" id="tela02_06" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_07" id="tela02_07" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_08" id="tela02_08" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_09" id="tela02_09" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_10" id="tela02_10" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_11" id="tela02_11" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_12" id="tela02_12" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_13" id="tela02_13" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_14" id="tela02_14" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_15" id="tela02_15" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_16" id="tela02_16" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_17" id="tela02_17" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_18" id="tela02_18" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_19" id="tela02_19" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_20" id="tela02_20" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_21" id="tela02_21" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_22" id="tela02_22" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_23" id="tela02_23" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_24" id="tela02_24" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_25" id="tela02_25" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_26" id="tela02_26" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_27" id="tela02_27" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_28" id="tela02_28" disabled/>
+										</div>																		
+									</div>
+								</div>
+								<div class="col-4" style="border: 1px solid !important;">
+									<div class="aponta-form-row p-0">
+										<div class="col-12 p-0">
+											<label for="larvecida" style="margin-bottom: auto; font-size: 11px;">Com Aedes albopictus</label><br>
+										</div>										
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_29" id="tela02_29" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_30" id="tela02_30" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_31" id="tela02_31" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_32" id="tela02_32" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_33" id="tela02_33" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_34" id="tela02_34" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_35" id="tela02_35" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_36" id="tela02_36" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_37" id="tela02_37" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_38" id="tela02_38" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_39" id="tela02_39" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_40" id="tela02_40" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_41" id="tela02_41" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_42" id="tela02_42" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_43" id="tela02_43" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_44" id="tela02_44" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_45" id="tela02_45" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_46" id="tela02_46" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_47" id="tela02_47" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_48" id="tela02_48" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_49" id="tela02_49" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_50" id="tela02_50" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_51" id="tela02_51" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_52" id="tela02_52" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_53" id="tela02_53" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_54" id="tela02_54" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_55" id="tela02_55" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_56" id="tela02_56" disabled/>
+										</div>																		
+									</div>
+								</div>
+								<div class="col-4" style="border: 1px solid !important;">
+									<div class="aponta-form-row p-0">
+										<div class="col-12 p-0">
+											<label for="larvecida" style="margin-bottom: auto; font-size: 11px;">Com Aedes aegypti + Aedes albopictus</label><br>
+										</div>										
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_57" id="tela02_57" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_58" id="tela02_58" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_59" id="tela02_59" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_60" id="tela02_60" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_61" id="tela02_61" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_62" id="tela02_62" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_63" id="tela02_63" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_64" id="tela02_64" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_65" id="tela02_65" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_66" id="tela02_66" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_67" id="tela02_67" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_68" id="tela02_68" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_69" id="tela02_69" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_70" id="tela02_70" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_71" id="tela02_71" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_72" id="tela02_72" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_73" id="tela02_73" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_74" id="tela02_74" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_75" id="tela02_75" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_76" id="tela02_76" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_77" id="tela02_77" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_78" id="tela02_78" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_79" id="tela02_79" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_80" id="tela02_80" disabled/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_81" id="tela02_81" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_82" id="tela02_82" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_83" id="tela02_83" disabled/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tela02_84" id="tela02_84" disabled/>
+										</div>																		
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding: 0rem; border-top: 0px; display: flow-root;"></div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Resumo Laboratório Tela 2 -->
+<div class="modal" style="overflow:hiddden !important;width:700px;" id="resumo_lab_2" role="dialog">
+	<div class="modal-dialog" id="resumo_lab_2_dialog_resumo" role="document">
+		<div class="modal-content" style="background: #ffffff" id="resumo_lab_2_content">
+			<div class="modal-header" style="padding: 0px;display: block;">
+				<strong style="margin-left: 10px;">Resumo Laboratório - Tela 2</strong>
+				<span style="float:right;margin: auto;display: flex;">
+					<button type="button" onclick="" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</span>
+			</div>
+			<div class="modal-body" id="body_resumo_lab_2">
+				<div class="row" style="display: contents;">					
+					<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+						<div class="col-4 p-0">
+							<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+								<label style="margin-bottom: 10px; margin-top: 13%; font-size: small; text-align: -webkit-center;">Total quarteirães concluídos</label><br>
+								<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="quarteirao" id="resumo_lab_2_01" disabled/>
+							</div>
+						</div>
+						<div class="col-8 p-0">
+							<div class="aponta-form" id="resumo_laboratorio">
+								<label for="larvecida" style="margin-bottom: auto;">N. de Imóveis Trabalhados por Tipo</label><br>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 0px;display: flex;">
+								<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+									<div class="col-2 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Residência</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="residencia" id="resumo_lab_2_02" disabled/>
+										</div>
+									</div>
+									<div class="col-2 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Comércio</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="comercio" id="resumo_lab_2_03" disabled/>
+										</div>
+									</div>
+									<div class="col-2 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">TB</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="tb" id="resumo_lab_2_04" disabled/>
+										</div>
+									</div>
+									<div class="col-2 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">PE</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="pe" id="resumo_lab_2_05" disabled/>
+										</div>
+									</div>
+									<div class="col-2 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Outros</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="outros" id="resumo_lab_2_06" disabled/>
+										</div>
+									</div>
+									<div class="col-2 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Total</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="total" id="resumo_lab_2_07" disabled/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="display: contents;">					
+					<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+						<div class="col-5 p-0">
+							<div class="aponta-form" id="resumo_laboratorio">
+								<label for="larvecida" style="margin-bottom: auto;">N. de Imóveis</label><br>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 0px;display: flex;">
+								<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+									<div class="col-6 p-0">
+										<div class="aponta-form" id="resumo_laboratorio">
+											<label for="larvecida" style="margin-bottom: auto;">Tratamento</label><br>
+										</div>
+										<div class="aponta-form-row p-0" style="margin-top: 0px;display: flex;">
+											<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+												<div class="col-6 p-0">
+													<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+														<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Focal</label><br>
+														<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="focal" id="resumo_lab_2_08" disabled/>
+													</div>
+												</div>
+												<div class="col-6 p-0">
+													<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+														<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Perifocal</label><br>
+														<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="perifocal" id="resumo_lab_2_09" disabled/>
+													</div>
+												</div>
+											</div>
+										</div>									
+									</div>
+									<div class="col-6 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: 16%; margin-top: 12%; font-size: small; text-align: -webkit-center;">Inspecionados</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="inspecionados" id="resumo_lab_2_10" disabled/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+								<label style="margin-bottom: 23%; margin-top: 31%; font-size: small; text-align: -webkit-center;">Amostras Coletadas</label><br>
+								<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="amo_coletadas" id="resumo_lab_2_11" disabled/>
+							</div>
+						</div>
+						<div class="col-5 p-0">
+							<div class="aponta-form" id="resumo_laboratorio">
+								<label for="larvecida" style="margin-bottom: auto;">Pendências</label>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 0px;display: flex;">
+								<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+									<div class="col-4 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: 21%;margin-top: 22%;font-size: small;text-align: -webkit-center;">Recusados</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="recusados" id="resumo_lab_2_12" disabled/>
+										</div>
+									</div>
+									<div class="col-4 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: 21%;margin-top: 22%;font-size: small;text-align: -webkit-center;">Fechados</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="fechados" id="resumo_lab_2_13" disabled/>
+										</div>
+									</div>
+									<div class="col-4 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: 21%;margin-top: 22%;font-size: small;text-align: -webkit-center;">Recuperados</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="recuperados" id="resumo_lab_2_14" disabled/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="display: contents;">					
+					<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+						<div class="col-10 p-0">
+							<div class="aponta-form" id="resumo_laboratorio">
+								<label for="larvecida" style="margin-bottom: auto;">N. de Depósitos Inspecionados por Tipo</label><br>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 0px;display: flex;">
+								<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+									<div class="col-1 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">A1</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="a1" id="resumo_lab_2_15" disabled/>
+										</div>
+									</div>
+									<div class="col-1 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">A2</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="a2" id="resumo_lab_2_16" disabled/>
+										</div>
+									</div>
+									<div class="col-1 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">B</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="b" id="resumo_lab_2_17" disabled/>
+										</div>
+									</div>
+									<div class="col-1 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">C</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="c" id="resumo_lab_2_18" disabled/>
+										</div>
+									</div>
+									<div class="col-1 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">D1</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="d1" id="resumo_lab_2_19" disabled/>
+										</div>
+									</div>
+									<div class="col-1 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">D2</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="d2" id="resumo_lab_2_20" disabled/>
+										</div>
+									</div>
+									<div class="col-1 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">E</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="e" id="resumo_lab_2_21" disabled/>
+										</div>
+									</div>
+									<div class="col-5 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Total</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="total" id="resumo_lab_2_22" disabled/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+								<label style="margin-bottom: 8%; margin-top: 11%; font-size: small; text-align: -webkit-center;">Depósitos Eliminados</label><br>
+								<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="dp_eliminados" id="resumo_lab_2_23" disabled/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="display: contents;">					
+					<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+						<div class="col-12 p-0">
+							<div class="aponta-form" id="resumo_laboratorio">
+								<label for="larvecida" style="margin-bottom: auto;">Depósitos Tratados com Larvícida</label><br>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 0px;display: flex;">
+								<div class="row col-12 p-0" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+									<div class="col-4 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Tipo</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="tipo" id="resumo_lab_2_24" disabled/>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="tipo" id="resumo_lab_2_25" disabled/>
+										</div>
+									</div>
+									<div class="col-4 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Qtd. de Larvícida (ml ou g)</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="qtd" id="resumo_lab_2_26" disabled/>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="qtd" id="resumo_lab_2_27" disabled/>
+										</div>
+									</div>
+									<div class="col-4 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: auto; font-size: small; text-align: -webkit-center;">Qtd. de Depósitos Tratados</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="qtd_dp_tratados" id="resumo_lab_2_28" disabled/>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="qtd_dp_tratados" id="resumo_lab_2_29" disabled/>
+										</div>
+									</div>									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="display: contents;">					
+					<div class="row" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+						<div class="col-8 p-0">
+							<div class="aponta-form" id="resumo_laboratorio">
+								<label for="larvecida" style="margin-bottom: auto;">Adulticida Residual</label><br>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 0px;display: flex;">
+								<div class="row col-12 p-0" style="margin-top: 0px;margin-left: 0px;margin-right: 0px;">
+									<div class="col-6 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: 0%; margin-top: 5%; font-size: small; text-align: -webkit-center;">Tipo</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="tipo" id="resumo_lab_2_30" disabled/>
+										</div>
+									</div>
+									<div class="col-6 p-0">
+										<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+											<label style="margin-bottom: 0%; margin-top: 5%; font-size: small; text-align: -webkit-center;">Quantidade (ml ou g)</label><br>
+											<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="qtd" id="resumo_lab_2_31" disabled/>
+										</div>
+									</div>																	
+								</div>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+								<label style="margin-bottom: 10%; margin-top: 19%; font-size: small; text-align: -webkit-center;">Total de agentes na semana</label><br>
+								<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="qtd" id="resumo_lab_2_32" disabled/>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="aponta-form" id="resumo_laboratorio" style="padding: 0rem !important;">
+								<label style="margin-bottom: 4%; margin-top: 7%; font-size: small; text-align: -webkit-center;">Total de dias trabalhados na semana</label><br>
+								<input class="form-control mt-form-control-sm input_resumo_lab_2" type="text" name="qtd" id="resumo_lab_2_33" disabled/>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>
+			<div class="modal-footer" style="padding: 0rem; border-top: 0px; display: flow-root;"></div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal lançamento laboratorio-->
+<div class="modal" style="overflow:hiddden !important;width:800px;background: none;border: none!important; opacity: unset!important;" id="cad_laboratorio" role="dialog">
+	<div class="modal-dialog" id="cad_laboratorio_dialog" role="document">
+		<div class="modal-content" style="background: #ffffff" id="cad_laboratorio_content">
+			<div class="modal-header" style="padding: 0px;display: block;">
+				<strong style="margin-left: 10px;">Cadastro Resumo do Laboratório</strong>
+				<span style="float:right;margin: auto;display: flex;">
+					<button type="button" onclick="" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</span>
+			</div>
+			<div class="modal-body">
+				<div class="aponta-form" id="cad_laboratorio_form">
+					<div class="aponta-form-row p-0">
+						<div class="col-8 p-0">
+							<div class="form-group" style="margin-left: 95px;">
+								<label for="n. controle" style="margin-bottom: auto;">RESUMO SEMANAL DO SERVIÇO ANTIVETORIAL
+								</label>
+							</div>
+						</div>
+						<div class="col-4 p-0">
+							<div class="form-group">
+								<label for="n. controle" style="margin-bottom: auto;">Número do controle:
+								</label>
+								<input type="number"  class="form-control mt-form-control-sm" style="display: inline;width: 100px;" name="n_controle" id="n_controle"/>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="uf" style="margin-bottom: auto;">UF:
+								</label>
+								<input type="text"  class="form-control mt-form-control-sm" style="display: inline;" name="uf" id="uf"/>
+							</div>
+						</div>
+						<div class="col-4 p-0">
+							<div class="form-group">
+								<label for="municipio" style="margin-bottom: auto;">Município:
+								</label>
+								<input type="text"  class="form-control mt-form-control-sm" style="display: inline;" name="municipio" id="municipio"/>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="ano" style="margin-bottom: auto;">Ano:
+								</label>
+								<input type="number"  class="form-control mt-form-control-sm" style="display: inline;" name="ano" id="ano"/>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="zona" style="margin-bottom: auto;">Zona:
+								</label>
+								<input type="number"  class="form-control mt-form-control-sm" style="display: inline;" name="zona" id="zona"/>
+							</div>
+						</div>
+						<div class="col-2 p-0">
+							<div class="form-group">
+								<label for="ciclo_ano" style="margin-bottom: auto;">Ciclo/Ano:
+								</label>
+								<input type="number"  class="form-control mt-form-control-sm" style="display: inline;" name="ciclo_ano" id="ciclo_ano"/>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="localidade" style="margin-bottom: auto;">Localidade:
+								</label>
+								<input type="text"  class="form-control mt-form-control-sm" style="display: inline;" name="localidade" id="localidade"/>
+							</div>
+						</div>
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="categoria" style="margin-bottom: auto;">Categoria:
+								</label>
+								<input type="text"  class="form-control mt-form-control-sm" style="display: inline;" name="categoria" id="categoria"/>
+							</div>
+						</div>
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="atividade" style="margin-bottom: auto;">Atividade:
+								</label>
+								<input type="number"  class="form-control mt-form-control-sm" style="display: inline;" name="atividade" id="atividade"/>
+							</div>
+						</div>
+						<div class="col-3 p-0">
+							<div class="form-group">
+								<label for="microarea" style="margin-bottom: auto;">Microárea:
+								</label>
+								<input type="text"  class="form-control mt-form-control-sm" style="display: inline;" name="microarea" id="microarea"/>
+							</div>
+						</div>						
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-6 p-0">
+							<div class="form-group">
+								<label for="semana_ep" style="margin-bottom: auto;">Semana epidemiológica:
+								</label>
+								<input type="text"  class="form-control mt-form-control-sm" style="display: inline;" name="semana_ep" id="semana_ep"/>
+							</div>
+						</div>
+						<div class="col-6 p-0">
+							<div class="form-group">
+								<label for="agente" style="margin-bottom: auto;">Agente comunitário:
+								</label>
+								<input type="text"  class="form-control mt-form-control-sm" style="display: inline;" name="agente" id="agente"/>
+							</div>
+						</div>
+					</div>
+					<div class="aponta-form-row p-0">
+						<div class="col-12 p-0" style="text-align: -webkit-center;">
+							<div class="form-group" style="border-top: 1px solid !important;">
+								<label for="agente" style="margin-bottom: auto;">RESUMO DO LABORATÓRIO:
+								</label>
+							</div>
+						</div>						
+					</div>
+					<div class="row" id="cad_laboratorio_row_1" style="display: contents;">
+						<div class="mt-2" id="tab_cad_laboratorio" style="margin-top: auto!important;">
+							<div class="col-12 p-0">
+								<label for="larvecida" style="margin-bottom: auto;">Número de depósitos com espécimes por tipo</label><br>
+							</div>
+							<div class="aponta-form" id="cad_laboratorio">
+								<div class="aponta-form-row p-0" style="margin-top: -8px;text-align-last: center;">
+									<div class="col-3 p-0">
+										<label for="larvecida" style="margin-bottom: auto;">Espécimes</label><br>
+									</div>
+									<div class="col-1 p-0">
+										<label for="A1" style="margin-bottom: auto;">A1</label><br>
+									</div>
+									<div class="col-1 p-0">
+										<label for="A2" style="margin-bottom: auto;">A2</label><br>
+									</div>
+									<div class="col-1 p-0">
+										<label for="B" style="margin-bottom: auto;">B</label><br>
+									</div>
+									<div class="col-1 p-0">
+										<label for="C" style="margin-bottom: auto;">C</label><br>
+									</div>
+									<div class="col-1 p-0">
+										<label for="D1" style="margin-bottom: auto;">D1</label><br>
+									</div>
+									<div class="col-1 p-0">
+										<label for="D2" style="margin-bottom: auto;">D2</label><br>
+									</div>
+									<div class="col-1 p-0">
+										<label for="E" style="margin-bottom: auto;">E</label><br>
+									</div>
+									<div class="col-2 p-0">
+										<label for="Total" style="margin-bottom: auto;">Total</label><br>
+									</div>
+								</div>
+								<div class="aponta-form-row p-0" style="margin-top: 5px;">
+									<div class="col-3 p-0">
+										<label for="tipo" style="margin-bottom: auto;">Com Aedes aegypti</label>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="a1_aegypti" id="a1_aegypti"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="a2_aegypti" id="a2_aegypti"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="b_aegypti" id="b_aegypti"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="c1_aegypti" id="c1_aegypti"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="d1_aegypti" id="d1_aegypti"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="d2_aegypti" id="d2_aegypti"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="e_aegypti" id="e_aegypti"/>
+									</div>
+									<div class="col-2 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="total_aegypti" id="total_aegypti"/>
+									</div>
+								</div>
+								<div class="aponta-form-row p-0" style="margin-top: 5px;">
+									<div class="col-3 p-0">
+										<label for="tipo" style="margin-bottom: auto;">Com Aedes albopictus</label>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="a1_albopictus" id="a1_albopictus"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="a2_albopictus" id="a2_albopictus"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="b_albopictus" id="b_albopictus"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="c1_albopictus" id="c1_albopictus"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="d1_albopictus" id="d1_albopictus"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="d2_albopictus" id="d2_albopictus"/>
+									</div>
+									<div class="col-1 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="e_albopictus" id="e_albopictus"/>
+									</div>
+									<div class="col-2 p-0">
+										<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="total_albopictus" id="total_albopictus"/>
+									</div>
+								</div>
+							</div>						
+						</div>
+						<div class="row" style="margin-top: 10px;margin-left: 0px;margin-right: 0px;">
+							<div class="col-8 p-0">
+								<label for="larvecida" style="margin-bottom: auto;">Número de imóveis com espécimes por tipo:</label><br>
+							</div>
+							<div class="col-4 p-0">
+								<label for="larvecida" style="margin-bottom: auto;">Número de exemplares:</label><br>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 10px;margin-left: 0px;margin-right: 0px;">
+							<div class="col-8 p-0">
+								<div class="aponta-form" id="resumo_laboratorio">
+									<div class="aponta-form-row p-0" style="margin-top: -8px;">
+										<div class="col-5 p-0">
+											<label for="larvecida" style="margin-bottom: auto;">Espécimes</label><br>
+										</div>
+										<div class="col-1 p-0">
+											<label for="A1" style="margin-bottom: auto;">R</label><br>
+										</div>
+										<div class="col-1 p-0">
+											<label for="A2" style="margin-bottom: auto;">C</label><br>
+										</div>
+										<div class="col-1 p-0">
+											<label for="B" style="margin-bottom: auto;">TB</label><br>
+										</div>
+										<div class="col-1 p-0">
+											<label for="C" style="margin-bottom: auto;">PE</label><br>
+										</div>
+										<div class="col-1 p-0">
+											<label for="D1" style="margin-bottom: auto;">O</label><br>
+										</div>
+										<div class="col-2 p-0">
+											<label for="D2" style="margin-bottom: auto;">Total</label><br>
+										</div>
+									</div>
+								</div>
+								<div class="aponta-form" id="resumo_laboratorio" style="border-top: none!important;">
+									<div class="aponta-form-row p-0" style="margin-top: 5px;">
+										<div class="col-5 p-0">
+											<label for="tipo" style="margin-bottom: auto;">Com Aedes aegypti</label>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="r_aegypti" id="r_aegypti"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="c2_aegypti" id="c2_aegypti"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tb_aegypti" id="tb_aegypti"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="pe_aegypti" id="pe_aegypti"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="o_aegypti" id="o_aegypti"/>
+										</div>
+										<div class="col-2 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="total_imoveis_aegypti" id="total_imoveis_aegypti"/>
+										</div>								
+									</div>
+									<div class="aponta-form-row p-0" style="margin-top: 5px;">
+										<div class="col-5 p-0">
+											<label for="tipo" style="margin-bottom: auto;">Com Aedes albopictus</label>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="r_albopictus" id="r_albopictus"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="c2_albopictus" id="c2_albopictus"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tb_albopictus" id="tb_albopictus"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="pe_albopictus" id="pe_albopictus"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="o_albopictus" id="o_albopictus"/>
+										</div>
+										<div class="col-2 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="total_imoveis_albopictus" id="total_imoveis_albopictus"/>
+										</div>								
+									</div>
+									<div class="aponta-form-row p-0" style="margin-top: 5px;">
+										<div class="col-5 p-0">
+											<label for="tipo" style="margin-bottom: auto;">Outros</label>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="r_outros" id="r_outros"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="c_outros" id="c_outros"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="tb_outros" id="tb_outros"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="pe_outros" id="pe_outros"/>
+										</div>
+										<div class="col-1 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="o_outros" id="o_outros"/>
+										</div>
+										<div class="col-2 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="total_outros" id="total_outros"/>
+										</div>								
+									</div>
+								</div>
+							</div>
+							<div class="col-4 p-0">
+								<div class="aponta-form" id="resumo_laboratorio">							
+									<div class="aponta-form-row p-0" style="margin-top: -8px;">
+										<div class="col-3 p-0">
+											<label for="larvecida" style="margin-bottom: auto;">Larvas</label><br>
+										</div>
+										<div class="col-3 p-0">
+											<label for="A1" style="margin-bottom: auto;">Pupas</label><br>
+										</div>
+										<div class="col-3 p-0">
+											<label for="A2" style="margin-bottom: auto;">Ex. pupa</label><br>
+										</div>
+										<div class="col-3 p-0">
+											<label for="B" style="margin-bottom: auto;">Adultos</label><br>
+										</div>
+									</div>																				
+								</div>
+								<div class="aponta-form" id="resumo_laboratorio" style="border-top: none!important;">
+									<div class="aponta-form-row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="larvas_aegypti" id="larvas_aegypti"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="pupas_aegypti" id="pupas_aegypti"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="expupa_aegypti" id="expupa_aegypti"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="adultos_aegypti" id="adultos_aegypti"/>
+										</div>																	
+									</div>
+									<div class="aponta-form-row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="larvas_albopictus" id="larvas_albopictus"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="pupas_albopictus" id="pupas_albopictus"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="expupa_albopictus" id="expupa_albopictus"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="adultos_albopictus" id="adultos_albopictus"/>
+										</div>																	
+									</div>
+									<div class="aponta-form-row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="larvas_outros" id="larvas_outros"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="pupas_outros" id="pupas_outros"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="expupa_outros" id="expupa_outros"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="adultos_outros" id="adultos_outros"/>
+										</div>																	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" id="cad_laboratorio_row_2" style="display: none;">
+						<div class="aponta-form" id="resumo_laboratorio" style="margin-bottom: 5px;">
+							<div class="col-12 p-0">
+								<label for="larvecida" style="margin-bottom: auto;">N. e sequência de quarteirão</label><br>
+							</div>
+							<div class="aponta-form-row p-0" style="margin-top: 5px;">
+								<div class="col-4" style="border: 1px solid !important;">
+									<div class="aponta-form-row p-0">
+										<div class="col-12 p-0">
+											<label for="larvecida" style="margin-bottom: auto; font-size: 11px;">Com Aedes aegypti</label><br>
+										</div>										
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_1" id="quart_aegypti_1"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_2" id="quart_aegypti_2"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_3" id="quart_aegypti_3"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_4" id="quart_aegypti_4"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_5" id="quart_aegypti_5"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_6" id="quart_aegypti_6"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_7" id="quart_aegypti_7"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_8" id="quart_aegypti_8"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_9" id="quart_aegypti_9"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_10" id="quart_aegypti_10"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_11" id="quart_aegypti_11"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_12" id="quart_aegypti_12"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_13" id="quart_aegypti_13"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_14" id="quart_aegypti_14"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_15" id="quart_aegypti_15"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_16" id="quart_aegypti_16"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_17" id="quart_aegypti_17"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_18" id="quart_aegypti_18"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_19" id="quart_aegypti_19"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_20" id="quart_aegypti_20"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_21" id="quart_aegypti_21"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_22" id="quart_aegypti_22"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_23" id="quart_aegypti_23"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_24" id="quart_aegypti_24"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_25" id="quart_aegypti_25"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_26" id="quart_aegypti_26"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_27" id="quart_aegypti_27"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegypti_28" id="quart_aegypti_28"/>
+										</div>																		
+									</div>
+								</div>
+								<div class="col-4" style="border: 1px solid !important;">
+									<div class="aponta-form-row p-0">
+										<div class="col-12 p-0">
+											<label for="larvecida" style="margin-bottom: auto; font-size: 11px;">Com Aedes albopictus</label><br>
+										</div>										
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_1" id="quart_albopictus_1"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_2" id="quart_albopictus_2"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_3" id="quart_albopictus_3"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_4" id="quart_albopictus_4"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_5" id="quart_albopictus_5"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_6" id="quart_albopictus_6"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_7" id="quart_albopictus_7"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_8" id="quart_albopictus_8"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_9" id="quart_albopictus_9"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_10" id="quart_albopictus_10"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_11" id="quart_albopictus_11"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_12" id="quart_albopictus_12"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_13" id="quart_albopictus_13"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_14" id="quart_albopictus_14"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_15" id="quart_albopictus_15"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_16" id="quart_albopictus_16"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_17" id="quart_albopictus_17"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_18" id="quart_albopictus_18"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_19" id="quart_albopictus_19"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_20" id="quart_albopictus_20"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_21" id="quart_albopictus_21"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_22" id="quart_albopictus_22"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_23" id="quart_albopictus_23"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_24" id="quart_albopictus_24"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_25" id="quart_albopictus_25"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_26" id="quart_albopictus_26"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_27" id="quart_albopictus_27"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_albopictus_28" id="quart_albopictus_28"/>
+										</div>																		
+									</div>
+								</div>
+								<div class="col-4" style="border: 1px solid !important;">
+									<div class="aponta-form-row p-0">
+										<div class="col-12 p-0">
+											<label for="larvecida" style="margin-bottom: auto; font-size: 11px;">Com Aedes aegypti + Aedes albopictus</label><br>
+										</div>										
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_1" id="quart_aegy_alb_1"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_2" id="quart_aegy_alb_2"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_3" id="quart_aegy_alb_3"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_4" id="quart_aegy_alb_4"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_5" id="quart_aegy_alb_5"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_6" id="quart_aegy_alb_6"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_7" id="quart_aegy_alb_7"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_8" id="quart_aegy_alb_8"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_9" id="quart_aegy_alb_9"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_10" id="quart_aegy_alb_10"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_11" id="quart_aegy_alb_11"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_12" id="quart_aegy_alb_12"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_13" id="quart_aegy_alb_13"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_14" id="quart_aegy_alb_14"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_15" id="quart_aegy_alb_15"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_16" id="quart_aegy_alb_16"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_17" id="quart_aegy_alb_17"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_18" id="quart_aegy_alb_18"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_19" id="quart_aegy_alb_19"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_20" id="quart_aegy_alb_20"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_21" id="quart_aegy_alb_21"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_22" id="quart_aegy_alb_22"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_23" id="quart_aegy_alb_23"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_24" id="quart_aegy_alb_24"/>
+										</div>																		
+									</div>
+									<div class="row p-0" style="margin-top: 5px;">
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_25" id="quart_aegy_alb_25"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_26" id="quart_aegy_alb_26"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_27" id="quart_aegy_alb_27"/>
+										</div>
+										<div class="col-3 p-0">
+											<input class="form-control mt-form-control-sm" style="display: inline;" type="text" name="quart_aegy_alb_28" id="quart_aegy_alb_28"/>
+										</div>																		
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div>
+		</div>
+		<div class="aponta-form" id="resumo_laboratorio" style="border: none!important;margin-top: -10px;">
+			<div class="aponta-form-row p-0">
+				<div class="col-6 p-0">
+					<button title="Salvar resumo" class="btn btn-sm btn-primary" onclick="saveResumoLab()">Salvar resumo</button>
+					<button title="Limpar resumo" class="btn btn-sm btn-info" onclick="clearResumoLabInputs()">Limpar resumo</button>
+				</div>
+				<div class="col-6 p-0 text-right" id="footer_pesquisa">
+					<i class="far fa-2x fa-arrow-alt-circle-left" onclick="cad_laboratorio_nextPage(1)"></i>
+					<i class="far fa-2x fa-arrow-alt-circle-right" onclick="cad_laboratorio_nextPage()"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div></div>
+
+<!-- Modal Boletim de Campo e de Laboratório do Levantamento Rápido de ìndices - LIRAa -->
+<div class="modal" id="liraa" role="dialog">
+	<div class="modal-dialog" id="liraa_dialog" role="document">
+		<div class="modal-content" style="background: #ffffff" id="liraa_content">
+			<div class="modal-header" style="padding: 0px;display: block;">
+				<strong style="margin-left: 10px;">LIRAa</strong>
+				<span style="float:right;margin: auto;display: flex;">
+					<button type="button" onclick="" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</span>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="aponta-form" id="liraa_form">
+						<img src="/img/boletim_lab_a.jpg" alt="some text">
+					</div>
+					<div class="aponta-form" id="liraa_form">
+						<img src="/img/boletim_lab_b.jpg" alt="some text">
+					</div>
+				</div>
+			<div>
+		</div>
+	</div>
+</div>
